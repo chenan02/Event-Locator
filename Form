@@ -1,0 +1,37 @@
+<?php include('auth.php'); ?>
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Maps</title>
+<link rel="stylesheet" type="text/css" href="Style.css" />
+</head>
+<body>
+	<h1>Maps</h1>
+	<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=Ann%20Arbor%2C%20MI%2C%20United%20States&key=AIzaSyArt_CkFRuUH5vjE_e1_rkCVW_rD0K2pMw"></iframe>
+	<p>Congrats you are now logged in!</p>
+	<nav>
+			<form action="events_new.php" method="post">
+
+		<ul>
+			<li>
+				<label for="name">events Name</label>
+				<input id="name" name="name" type = "varchar"/>
+
+				<label for="address">Address</label>
+				<input id="address" name="address" type = "varchar"/>
+
+				<label for="datee">datee</label>
+				<input id="datee" name="datee" type = "varchar"/>
+
+				<label for="time">Time</label>
+				<input id="time" name="time" type = "varchar"/>
+				<input type="submit" name="submit" value="Create events" />
+
+
+			</li>
+			<li><a href=login_logout.php>Log Out</a></li>
+		</ul>
+	</nav>	
+</body>
+</html>
