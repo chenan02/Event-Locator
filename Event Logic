@@ -1,0 +1,109 @@
+<?php
+        print("heyheyhey");
+        //Start session and get the database connection details
+        session_start(); require_once('config.php');
+        
+        //Variable declaration: create an array to store validation errors and a flag to identify errors
+        $errMsg_arr = array(); $errFlag = false;
+        
+        //Connect to the database
+        $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+        if(!$link){
+                die('Failed to connect to server: ' . mysql_error());
+        }
+        
+        //Select database
+        $db = mysql_select_db(DB_DATABASE);
+        if(!$db){
+             
+                die("Unable to select database");
+    
+        }
+
+        //Get the variables sent to the PHP and store then in local variables
+        //$userid = $_POST['userid'];
+        $name = $_POST['name'];
+        $address = $_POST['address'];
+        $time = $_POST['time'];
+        $datee = $_POST['datee'];       
+        echo $name;
+        //Input Validations (checks if input is empty)
+        if($name == ''){
+                $errMsg_arr[] = 'name missing';
+                $errFlag = true;
+        }
+
+        if($address == ''){
+                $errMsg_arr[] = 'address missing';
+                $errFlag = true;
+        }
+
+        if($time == ''){
+                $errMsg_arr[] = 'time missing';
+                $errFlag = true;
+        }
+
+        if($datee == ''){
+                $errMsg_arr[] = 'datee missing';
+                $errFlag = true;
+        }
+
+        //If there are input validations, redirect back to the login form
+        if($errFlag){
+                $_SESSION['ERRMSG_ARR'] = $errMsg_arr;
+                session_write_close();
+                header("location: error.php");
+                exit();
+        }
+        
+        /* //Create query
+        $qry="SELECT * FROM eventss WHERE name='$name'";
+        $name1=mysql_query($qry);
+
+        $qry1="SELECT * FROM eventss WHERE address='$address'";
+        $address1=mysql_query($qry1);
+
+        $qry2="SELECT * FROM eventss WHERE time='$time'";
+        $time1=mysql_query($qry2);
+
+        $qry3="SELECT * FROM eventss WHERE datee='$datee'";
+        $datee1=mysql_query($qry3); */
+       
+       $qry1 = "INSERT INTO events (name) VALUES ('$name')";
+       $result1 = mysql_query($qry1);
+
+       $qry2 = "INSERT INTO events (address) VALUES ('$address')";
+       $result2 = mysql_query($qry2);
+
+       $qry3 = "INSERT INTO events (time) VALUES ('$time')";
+       $result3 = mysql_query($qry3);
+
+       $qry4 = "INSERT INTO events (datee) VALUES ('$datee')";
+       $result4 = mysql_query($qry2);
+
+
+        //Check whether the query was successful or not
+        if($name1){
+                if(mysql_num_rows($name1)) == 1){
+                        //Login Successful
+                        session_regenerate_id();
+                        $events= mysql_fetch_assoc($name1));
+                        //Put session details in cookie
+                        $_SESSION['SESS_ID'] = $events['name'];
+                        $_SESSION['SESS_USERID'] = $events['name'];
+                        session_write_close();
+                        header("location: events_index.php");
+                        exit();
+                }
+                else{
+                        //Login failed
+                        header("location: error.php");
+                        exit();
+                }
+        }
+
+        else{
+                die("Query failed");
+        }
+        echo "it worked";
+?>
